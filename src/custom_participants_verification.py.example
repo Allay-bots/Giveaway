@@ -1,0 +1,26 @@
+import allay
+
+# pylint: disable=relative-beyond-top-level
+from .types import GiveawayData, GiveawayParticipant
+
+
+# pylint: disable=unused-argument
+async def verify_participants(bot: allay.Bot,
+                              giveaway: GiveawayData,
+                              participants: list[GiveawayParticipant]
+                              ) -> list[int]:
+    """Custom function that you can adapt to check if a list of participants are elligible
+        to win a giveaway
+
+    This function will automatically be called at the end of each giveaway with the list
+        of participants
+
+    Args:
+        bot (allay.Bot): The bot instance
+        giveaway (GiveawayData): The giveaway information
+        user_ids (list[GiveawayParticipant]): The list of participants as stored in the database
+
+    Returns:
+        list[int]: The list of elligible participants IDs
+    """
+    return [participant["user_id"] for participant in participants]

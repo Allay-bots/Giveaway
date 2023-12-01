@@ -622,11 +622,12 @@ class GiveawaysCog(commands.Cog):
             (giveaway_id,)
         )
         # mark winner participants as winners, others and non-winners
+        query_users_list = ', '.join('?' for _ in winners)
         allay.Database.query(
-            "UPDATE `giveaway_entries` \
-            SET winner = CASE WHEN user_id IN (?) THEN 1 ELSE 0 END \
+            f"UPDATE `giveaway_entries` \
+            SET winner = CASE WHEN user_id IN ({query_users_list}) THEN 1 ELSE 0 END \
             WHERE giveaway_id = ?",
-            (giveaway_id, winners)
+            (*winners, giveaway_id)
         )
 
     async def db_delete_giveaway(self, giveaway_id: str):

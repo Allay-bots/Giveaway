@@ -508,6 +508,8 @@ class GiveawaysCog(commands.Cog):
             return []
         filtered_participants_ids = await verify_participants(self.bot, data, participants)
         winners_count = min(data["winners_count"], len(filtered_participants_ids))
+        logs.info(f"Giveaways - {len(filtered_participants_ids)}/{len(participants)} \
+participants are elligible")
         return random.sample(filtered_participants_ids, winners_count)
 
     async def _merge_giveaways_data(self, original_data: GiveawayData,
